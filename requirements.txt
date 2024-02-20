@@ -1,0 +1,11 @@
+ipython
+jupyter
+requests
+pandas
+tqdm
+matplotlib
+scikit-learn
+anyascii
+nltk
+seaborn
+wordcloud
