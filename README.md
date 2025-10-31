@@ -1,6 +1,17 @@
-# DESCRIPTION
+# INSTALLATION
 
-There are 3 files in this project :
-- dowloader : downloads the camptocamp outings of alpinism and treks on the Pyrénées region as json files
-- loader : transforms the json files of outings into a CSV file with useful infos
-- distancer : preprocess data and calculates the distance between an outing/user's outings and all the others
+First, you need to install python.
+
+Then, install the librairies from the requierements.txt file. For example with pip :
+
+    pip install -r requirements.txt
+
+# USAGE
+
+Example usage :
+
+    python outings_recommandation.py -d ../data -o 1826832
+
+Options
+- -d: The path to the directory containing the output of c2c_downloader (see https://github.com/JulienEyzat/c2c-downloader)
+- -o: The outing id you want to find similar outings to. The id can be found as the number on the camptocamp URL of an outing

@@ -1,11 +1,7 @@
-ipython
-jupyter
-requests
-pandas
-tqdm
-matplotlib
-scikit-learn
 anyascii
 nltk
-seaborn
+pandas
+scikit-learn
+tabulate
+tqdm
 wordcloud
