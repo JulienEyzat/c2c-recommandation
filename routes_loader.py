@@ -5,10 +5,10 @@ import os
 import pandas as pd
 import tqdm
 
-class OutingsLoader:
+class RoutesLoader:
 
     def __init__(self, input_data_directory):
-        self.doc_type = "outings"
+        self.doc_type = "routes"
         self.input_data_directory = input_data_directory
         self.input_doc_directory = os.path.join(self.input_data_directory, self.doc_type)
 
@@ -18,52 +18,47 @@ class OutingsLoader:
         self.doc_direct_keys = [
             "document_id",
             "quality",
-            "access_condition",
-            "condition_rating",
-            "date_end",
-            "date_start",
-            "elevation_access",
-            "elevation_down_snow",
-            "elevation_max",
+            "main_waypoint_id",
             "elevation_min",
-            "elevation_up_snow",
-            "frequentation",
-            "glacier_rating",
-            "height_diff_down",
+            "elevation_max",
             "height_diff_up",
-            "hut_status",
-            "length_total",
-            "lift_status",
-            "partial_trip",
-            "participant_count",
-            "public_transport",
-            "hiking_rating",
-            "snow_quality",
-            "snow_quantity",
-            "global_rating",
+            "height_diff_down",
+            "route_length",
+            "difficulties_height",
+            "height_diff_access",
             "height_diff_difficulties",
-            "engagement_rating",
+            "glacier_gear",
+            "lift_access",
             "ski_rating",
-            "labande_global_rating"
+            "ski_exposition",
+            "labande_ski_rating",
+            "labande_global_rating",
+            "global_rating",
+            "engagement_rating",
+            "risk_rating",
+            "equipment_rating",
+            "ice_rating",
+            "mixed_rating"
         ]
         self.doc_list_keys = [
-            "avalanche_signs",
-            "activities"
+            "activities",
+            "durations",
+            "route_types",
+            "orientations",
+            "configuration",
+            "rock_types"
         ]
         self.doc_cooked_keys = [
             "lang",
             "title",
             "description",
             "summary",
-            "access_comment",
-            "avalanches",
-            "conditions",
-            "conditions_levels",
-            "hut_comment",
-            "participants",
-            "route_description",
-            "timing",
-            "weather"
+            "slope",
+            "remarks",
+            "gear",
+            "external_resources",
+            "route_history",
+            "title_prefix"
         ]
 
     def load(self):
@@ -85,22 +80,6 @@ class OutingsLoader:
                     doc[doc_list_key] = ",".join(json_doc[doc_list_key])
             # Position
             doc["geom"] = json_doc["geometry"]["geom"]
-            # Associated routes
-            doc["associated_route_ids"] = []
-            doc["associated_route_title_prefixes"] = []
-            doc["associated_route_titles"] = []
-            for associated_route in json_doc["associations"]["routes"]:
-                doc["associated_route_ids"].append(associated_route["document_id"])
-                doc["associated_route_titles"].append(associated_route["locales"][0]["title"])
-                doc["associated_route_title_prefixes"].append(associated_route["locales"][0]["title_prefix"])
-            # Associated users
-            doc["associated_user_ids"] = []
-            doc["associated_user_names"] = []    
-            doc["associated_forum_usernames"] = []
-            for associated_user in json_doc["associations"]["users"]:
-                doc["associated_user_ids"].append(associated_user["document_id"])
-                doc["associated_user_names"].append(associated_user["name"])
-                doc["associated_forum_usernames"].append(associated_user["forum_username"])
             # Postition
             for area in json_doc["areas"]:
                 key = area["area_type"]
